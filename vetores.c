@@ -231,49 +231,249 @@ void questao16() {
     }
 }
 
-void questao17() {
-    int numeros[50];
-    int somaPares = 0, somaImpares = 0, countPares = 0, countImpares = 0;
-    int maiorPar = -1, menorImpar = 1001;
+#include <stdio.h>
+#include <math.h>
+
+void ex16() {
+    float alturas[50];
+    int sexos[50];
+    float soma = 0, somaMulheres = 0;
+    int countMulheres = 0;
+    float maior = 0, menor = 9999;
+    
     for (int i = 0; i < 50; i++) {
-        printf("Digite o numero %d: ", i + 1);
+        printf("Digite a altura e o sexo (1=Masculino, 2=Feminino) do aluno %d: ", i + 1);
+        scanf("%f %d", &alturas[i], &sexos[i]);
+        soma += alturas[i];
+        
+        if (alturas[i] > maior) maior = alturas[i];
+        if (alturas[i] < menor) menor = alturas[i];
+        
+        if (sexos[i] == 2) {
+            somaMulheres += alturas[i];
+            countMulheres++;
+        }
+    }
+    
+    float mediaTurma = soma / 50;
+    float mediaMulheres = somaMulheres / countMulheres;
+    
+    printf("Maior altura: %.2f\n", maior);
+    printf("Menor altura: %.2f\n", menor);
+    printf("Mulheres com altura acima da média das mulheres (%.2f):\n", mediaMulheres);
+    for (int i = 0; i < 50; i++) {
+        if (sexos[i] == 2 && alturas[i] > mediaMulheres) {
+            printf("%.2f ", alturas[i]);
+        }
+    }
+    printf("\nPessoas com altura abaixo da média da turma (%.2f):\n", mediaTurma);
+    for (int i = 0; i < 50; i++) {
+        if (alturas[i] < mediaTurma) {
+            printf("%.2f ", alturas[i]);
+        }
+    }
+    printf("\n");
+}
+
+void ex17() {
+    int numeros[50];
+    int somaPares = 0, countPares = 0;
+    int somaImpares = 0, countImpares = 0;
+    int maiorPar = -1, menorImpar = 9999;
+    
+    for (int i = 0; i < 50; i++) {
+        printf("Digite o número %d: ", i + 1);
         scanf("%d", &numeros[i]);
+        
         if (numeros[i] % 2 == 0) {
             somaPares += numeros[i];
             countPares++;
-            if (numeros[i] > maiorPar) {
-                maiorPar = numeros[i];
-            }
+            if (numeros[i] > maiorPar) maiorPar = numeros[i];
         } else {
             somaImpares += numeros[i];
             countImpares++;
-            if (numeros[i] < menorImpar) {
-                menorImpar = numeros[i];
-            }
+            if (numeros[i] < menorImpar) menorImpar = numeros[i];
         }
     }
-    float mediaPares = (countPares > 0) ? (float)somaPares / countPares : 0;
-    float mediaImpares = (countImpares > 0) ? (float)somaImpares / countImpares : 0;
-
-    printf("Media dos pares: %.2f\n", mediaPares);
-    printf("Media dos impares: %.2f\n", mediaImpares);
-    printf("Maior numero par: %d\n", maiorPar);
-    printf("Menor numero impar: %d\n", menorImpar);
-    printf("Pares maiores que a media par:\n");
+    
+    float mediaPar = somaPares / (float)countPares;
+    float mediaImpar = somaImpares / (float)countImpares;
+    
+    printf("Média dos pares: %.2f\n", mediaPar);
+    printf("Média dos ímpares: %.2f\n", mediaImpar);
+    printf("Maior número par: %d\n", maiorPar);
+    printf("Menor número ímpar: %d\n", menorImpar);
+    printf("Pares maiores que a média par:\n");
     for (int i = 0; i < 50; i++) {
-        if (numeros[i] % 2 == 0 && numeros[i] > mediaPares) {
-            printf("%d\n", numeros[i]);
+        if (numeros[i] % 2 == 0 && numeros[i] > mediaPar) {
+            printf("%d ", numeros[i]);
         }
     }
-    printf("Impares menores que a media impar:\n");
+    printf("\nÍmpares menores que a média ímpar:\n");
     for (int i = 0; i < 50; i++) {
-        if (numeros[i] % 2 != 0 && numeros[i] < mediaImpares) {
-            printf("%d\n", numeros[i]);
+        if (numeros[i] % 2 != 0 && numeros[i] < mediaImpar) {
+            printf("%d ", numeros[i]);
         }
     }
+    printf("\n");
 }
 
-int main() {
-    // questaoque queira();
-    return 0;
+void ex18() {
+    float temperaturas[121];
+    float soma = 0, menor = 40, maior = 15;
+    int countAbaixoMedia = 0;
+    
+    for (int i = 0; i < 121; i++) {
+        printf("Digite a temperatura do dia %d: ", i + 1);
+        scanf("%f", &temperaturas[i]);
+        
+        soma += temperaturas[i];
+        if (temperaturas[i] < menor) menor = temperaturas[i];
+        if (temperaturas[i] > maior) maior = temperaturas[i];
+    }
+    
+    float media = soma / 121;
+    printf("Menor temperatura: %.2f\n", menor);
+    printf("Maior temperatura: %.2f\n", maior);
+    printf("Temperatura média: %.2f\n", media);
+    
+    for (int i = 0; i < 121; i++) {
+        if (temperaturas[i] < media) countAbaixoMedia++;
+    }
+    printf("Dias com temperatura abaixo da média: %d\n", countAbaixoMedia);
 }
+
+void ex19() {
+    float preco[100], quantidade[100], faturamento = 0;
+    
+    for (int i = 0; i < 100; i++) {
+        printf("Digite o preço e a quantidade vendida da mercadoria %d: ", i + 1);
+        scanf("%f %f", &preco[i], &quantidade[i]);
+        faturamento += preco[i] * quantidade[i];
+    }
+    
+    printf("Faturamento mensal do armazém: %.2f\n", faturamento);
+    #include <stdio.h>
+#include <math.h>
+
+void ex16() {
+    float alturas[50];
+    int sexos[50];
+    float soma = 0, somaMulheres = 0;
+    int countMulheres = 0;
+    float maior = 0, menor = 9999;
+    
+    for (int i = 0; i < 50; i++) {
+        printf("Digite a altura e o sexo (1=Masculino, 2=Feminino) do aluno %d: ", i + 1);
+        scanf("%f %d", &alturas[i], &sexos[i]);
+        soma += alturas[i];
+        
+        if (alturas[i] > maior) maior = alturas[i];
+        if (alturas[i] < menor) menor = alturas[i];
+        
+        if (sexos[i] == 2) {
+            somaMulheres += alturas[i];
+            countMulheres++;
+        }
+    }
+    
+    float mediaTurma = soma / 50;
+    float mediaMulheres = somaMulheres / countMulheres;
+    
+    printf("Maior altura: %.2f\n", maior);
+    printf("Menor altura: %.2f\n", menor);
+    printf("Mulheres com altura acima da média das mulheres (%.2f):\n", mediaMulheres);
+    for (int i = 0; i < 50; i++) {
+        if (sexos[i] == 2 && alturas[i] > mediaMulheres) {
+            printf("%.2f ", alturas[i]);
+        }
+    }
+    printf("\nPessoas com altura abaixo da média da turma (%.2f):\n", mediaTurma);
+    for (int i = 0; i < 50; i++) {
+        if (alturas[i] < mediaTurma) {
+            printf("%.2f ", alturas[i]);
+        }
+    }
+    printf("\n");
+}
+
+void ex17() {
+    int numeros[50];
+    int somaPares = 0, countPares = 0;
+    int somaImpares = 0, countImpares = 0;
+    int maiorPar = -1, menorImpar = 9999;
+    
+    for (int i = 0; i < 50; i++) {
+        printf("Digite o número %d: ", i + 1);
+        scanf("%d", &numeros[i]);
+        
+        if (numeros[i] % 2 == 0) {
+            somaPares += numeros[i];
+            countPares++;
+            if (numeros[i] > maiorPar) maiorPar = numeros[i];
+        } else {
+            somaImpares += numeros[i];
+            countImpares++;
+            if (numeros[i] < menorImpar) menorImpar = numeros[i];
+        }
+    }
+    
+    float mediaPar = somaPares / (float)countPares;
+    float mediaImpar = somaImpares / (float)countImpares;
+    
+    printf("Média dos pares: %.2f\n", mediaPar);
+    printf("Média dos ímpares: %.2f\n", mediaImpar);
+    printf("Maior número par: %d\n", maiorPar);
+    printf("Menor número ímpar: %d\n", menorImpar);
+    printf("Pares maiores que a média par:\n");
+    for (int i = 0; i < 50; i++) {
+        if (numeros[i] % 2 == 0 && numeros[i] > mediaPar) {
+            printf("%d ", numeros[i]);
+        }
+    }
+    printf("\nÍmpares menores que a média ímpar:\n");
+    for (int i = 0; i < 50; i++) {
+        if (numeros[i] % 2 != 0 && numeros[i] < mediaImpar) {
+            printf("%d ", numeros[i]);
+        }
+    }
+    printf("\n");
+}
+
+void ex18() {
+    float temperaturas[121];
+    float soma = 0, menor = 40, maior = 15;
+    int countAbaixoMedia = 0;
+    
+    for (int i = 0; i < 121; i++) {
+        printf("Digite a temperatura do dia %d: ", i + 1);
+        scanf("%f", &temperaturas[i]);
+        
+        soma += temperaturas[i];
+        if (temperaturas[i] < menor) menor = temperaturas[i];
+        if (temperaturas[i] > maior) maior = temperaturas[i];
+    }
+    
+    float media = soma / 121;
+    printf("Menor temperatura: %.2f\n", menor);
+    printf("Maior temperatura: %.2f\n", maior);
+    printf("Temperatura média: %.2f\n", media);
+    
+    for (int i = 0; i < 121; i++) {
+        if (temperaturas[i] < media) countAbaixoMedia++;
+    }
+    printf("Dias com temperatura abaixo da média: %d\n", countAbaixoMedia);
+}
+
+void ex19() {
+
+    float preco[100], quantidade[100], faturamento = 0;
+    
+    for (int i = 0; i < 100; i++) {
+        printf("Digite o preço e a quantidade vendida da mercadoria %d: ", i + 1);
+        scanf("%f %f", &preco[i], &quantidade[i]);
+        faturamento += preco[i] * quantidade[i];
+    }
+    
+    printf("Faturamento mensal do armazém: %.2f\n", faturamento);
+    
